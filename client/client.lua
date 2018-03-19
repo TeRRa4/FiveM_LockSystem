@@ -27,13 +27,13 @@ Citizen.CreateThread(function()
 
             -- Get targeted vehicle infos
             if(localVehId and localVehId ~= 0)then
-                local localVehPlate = GetVehicleNumberPlateText(localVehId)
+                local localVehPlate = string.lower(GetVehicleNumberPlateText(localVehId))
                 local localVehLockStatus = GetVehicleDoorLockStatus(localVehId)
                 local hasKey = false
 
                 -- If the player has the keys
                 for plate, vehicle in pairs(vehicles) do
-                    if(plate == localVehPlate)then
+                    if(string.lower(plate) == localVehPlate)then
                         hasKey = true
                         vehicle.update(localVehId, localVehLockStatus) -- update the vehicle infos (Useful for hydrating instances created by the /givekey command)
                         vehicle.lock() -- Lock or unlock the vehicle
@@ -109,6 +109,9 @@ end
 
 RegisterNetEvent("ls:updateVehiclePlate")
 AddEventHandler("ls:updateVehiclePlate", function(oldPlate, newPlate)
+    local oldPlate = string.lower(oldPlate)
+    local newPlate = string.lower(newPlate)
+
     if(vehicles[oldPlate])then
         vehicles[newPlate] = vehicles[oldPlate]
         vehicles[oldPlate] = nil
@@ -122,6 +125,7 @@ end)
 RegisterNetEvent("ls:newVehicle")
 AddEventHandler("ls:newVehicle", function(id, plate, lockStatus)
     if(plate)then
+        local plate = string.lower(plate)
         if(not id)then id = nil end
         if(not lockStatus)then lockStatus = nil end
         vehicles[plate] = newVehicle()
@@ -135,6 +139,7 @@ end)
 -- @ Returns void
 RegisterNetEvent("ls:giveKeys")
 AddEventHandler("ls:giveKeys", function(plate)
+    local plate = string.lower(plate)
     TriggerEvent("ls:newVehicle", nil, plate, nil)
 end)
 
@@ -142,7 +147,7 @@ end)
 RegisterNetEvent("ls:getHasOwner")
 AddEventHandler("ls:getHasOwner", function(hasOwner)
     print("RECEIVED HASOWNER :")
-    print(hasOwner)
+    print(hasOwner) -- nil
     print("END")
     if(hasOwner)then
         hasOwner = true

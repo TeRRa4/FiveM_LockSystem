@@ -3,6 +3,9 @@ local secondOwners = {} -- secondOwners[plate] = {identifier, identifier, ...}
 
 RegisterServerEvent("ls:updateServerVehiclePlate")
 AddEventHandler("ls:updateServerVehiclePlate", function(oldPlate, newPlate)
+    local oldPlate = string.lower(oldPlate)
+    local newPlate = string.lower(newPlate)
+
     if(owners[oldPlate] and not owners[newPlate])then 
         owners[newPlate] = owners[oldPlate]
         owners[oldPlate] = nil
@@ -35,6 +38,7 @@ end)
 
 RegisterServerEvent("ls:addSecondOwner")
 AddEventHandler("ls:addSecondOwner", function(targetIdentifier, plate)
+    local plate = string.lower(plate)
     table.insert(secondOwners[plate], targetIdentifier)
 end)
 
@@ -42,13 +46,19 @@ RegisterServerEvent("ls:addOwner")
 AddEventHandler("ls:addOwner", function(plate)
     local src = source
     local identifier = GetPlayerIdentifiers(src)[1]
+    local plate = string.lower(plate)
 
-    plate = string.lower(plate)
+    print("PLAQUE ENTREE (SERVER) :")
+    print(plate)
     owners[plate] = identifier
+    print("OWNERS[PLATE] =")
+    print(owners[plate])
+    print("END TEST")
 end)
 
 RegisterNetEvent("ls:checkOwner")
 AddEventHandler("ls:checkOwner", function(plate)
+    local plate = string.lower(plate)
     local src = source
     local hasOwner = false
 

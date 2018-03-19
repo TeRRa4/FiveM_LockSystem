@@ -1,4 +1,4 @@
-local vehicles = {}
+local vehicles = {} -- vehicles[plate] = Object vehicle
 
 AddEventHandler("playerSpawned", function()
     TriggerServerEvent("ls:retrieveVehiclesOnconnect")
@@ -30,9 +30,6 @@ Citizen.CreateThread(function()
                 local localVehPlate = GetVehicleNumberPlateText(localVehId)
                 local localVehLockStatus = GetVehicleDoorLockStatus(localVehId)
                 local hasKey = false
-
-                print(GetVehicleLayoutHash(localVehId))
-                
 
                 -- If the player has the keys
                 for plate, vehicle in pairs(vehicles) do
@@ -110,9 +107,18 @@ end
 ------------------------    EVENTS      ------------------------ 
 ------------------------     :)         ------------------------ 
 
+RegisterNetEvent("ls:updateVehiclePlate")
+AddEventHandler("ls:updateVehiclePlate", function(oldPlate, newPlate)
+    if(vehicles[oldPlate])then
+        vehicles[newPlate] = vehicles[oldPlate]
+        vehicles[oldPlate] = nil
+
+        TriggerServerEvent("ls:updateServerVehiclePlate", oldPlate, newPlate)
+    end
+end)
+
 -- @ Create client instance of a vehicle
 -- @ Get params : [id], plate, [lockStatus]
--- @ Returns void
 RegisterNetEvent("ls:newVehicle")
 AddEventHandler("ls:newVehicle", function(id, plate, lockStatus)
     if(plate)then

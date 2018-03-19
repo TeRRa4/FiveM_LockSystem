@@ -45,21 +45,8 @@ Citizen.CreateThread(function()
                     
                     -- If the player is inside the vehicle
                     if(isInside)then
-
-                        -- Check if vehicle is owned by someone
-                        hasOwner = false
-                        TriggerServerEvent('ls:checkOwner', localVehPlate)
-
-                        -- If no one owns the vehicle
-                        if(not hasOwner)then
-                            -- Get the keys
-                            TriggerEvent("ls:newVehicle", localVehId, localVehPlate, localVehLockStatus)
-                            TriggerServerEvent("ls:addOwner", localVehPlate)
-
-                            TriggerEvent("ls:notify", "You recovered the keys of the vehicle.")
-                        else
-                            TriggerEvent("ls:notify", "This vehicle is not yours!")
-                        end
+                        -- Verify if the vehicle is already owned and send all params
+                        TriggerServerEvent('ls:checkOwner', localVehId, localVehPlate, localVehLockStatus)
                     end
                 end
             end
@@ -107,6 +94,19 @@ end
 ------------------------    EVENTS      ------------------------ 
 ------------------------     :)         ------------------------ 
 
+-- @ Returns hasOwner : Boolean
+RegisterNetEvent("ls:getHasOwner")
+AddEventHandler("ls:getHasOwner", function(hasOwner, localVehId, localVehPlate, localVehLockStatus)
+    if(not hasOwner)then
+        TriggerEvent("ls:newVehicle", localVehId, localVehPlate, localVehLockStatus)
+        TriggerServerEvent("ls:addOwner", localVehPlate)
+
+        TriggerEvent("ls:notify", "You recovered the keys of the vehicle.")
+    else
+        TriggerEvent("ls:notify", "This vehicle is not yours!")
+    end
+end)
+
 RegisterNetEvent("ls:updateVehiclePlate")
 AddEventHandler("ls:updateVehiclePlate", function(oldPlate, newPlate)
     local oldPlate = string.lower(oldPlate)
@@ -141,17 +141,6 @@ RegisterNetEvent("ls:giveKeys")
 AddEventHandler("ls:giveKeys", function(plate)
     local plate = string.lower(plate)
     TriggerEvent("ls:newVehicle", nil, plate, nil)
-end)
-
--- @ Returns hasOwner : Boolean
-RegisterNetEvent("ls:getHasOwner")
-AddEventHandler("ls:getHasOwner", function(hasOwner)
-    print("RECEIVED HASOWNER :")
-    print(hasOwner) -- nil
-    print("END")
-    if(hasOwner)then
-        hasOwner = true
-    end
 end)
 
 -- Piece of code from Scott's InteractSound script : https://forum.fivem.net/t/release-play-custom-sounds-for-interactions/8282

@@ -48,28 +48,19 @@ AddEventHandler("ls:addOwner", function(plate)
     local identifier = GetPlayerIdentifiers(src)[1]
     local plate = string.lower(plate)
 
-    print("PLAQUE ENTREE (SERVER) :")
-    print(plate)
     owners[plate] = identifier
-    print("OWNERS[PLATE] =")
-    print(owners[plate])
-    print("END TEST")
 end)
 
 RegisterNetEvent("ls:checkOwner")
-AddEventHandler("ls:checkOwner", function(plate)
+AddEventHandler("ls:checkOwner", function(localVehId, plate, lockStatus)
     local plate = string.lower(plate)
     local src = source
     local hasOwner = false
 
     if(not owners[plate])then
-        TriggerClientEvent("ls:getHasOwner", src, nil)
-        print("LOCKSYSTEM: RETURN NIL LINE 57")
+        TriggerClientEvent("ls:getHasOwner", src, nil, localVehId, plate, lockStatus)
     else 
-        TriggerClientEvent("ls:getHasOwner", src, true)
-        print("LOCKSYSTEM: RETURN TRUE LINE 60")
-        print(owners[plate])
-        print("END-------------------")
+        TriggerClientEvent("ls:getHasOwner", src, true, localVehId, plate, lockStatus)
     end
 end)
 

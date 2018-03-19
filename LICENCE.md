@@ -1,4 +1,6 @@
-# Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
+# LOCKSYSTEM LICENCE
+
+## Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
 
 This is a human-readable summary of (and not a substitute for) the license.
 
@@ -11,9 +13,9 @@ This is a human-readable summary of (and not a substitute for) the license.
 
 The licensor cannot revoke these freedoms as long as you follow the license terms.
 
-### Under the following terms
+## Under the following terms
 
-## Attribution
+### Attribution
 
 - You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
 

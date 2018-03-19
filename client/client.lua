@@ -124,8 +124,8 @@ AddEventHandler("ls:newVehicle", function(id, plate, lockStatus)
     if(plate)then
         if(not id)then id = nil end
         if(not lockStatus)then lockStatus = nil end
-        vehicles[localVehPlate] = newVehicle()
-        vehicles[localVehPlate].__construct(id, plate, lockStatus)
+        vehicles[plate] = newVehicle()
+        vehicles[plate].__construct(id, plate, lockStatus)
     else
         print("Can't create the vehicle instance. Missing argument PLATE")
     end

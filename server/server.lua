@@ -1,6 +1,18 @@
 local owners = {} -- owners[plate] = identifier
 local secondOwners = {} -- secondOwners[plate] = {identifier, identifier, ...}
 
+RegisterServerEvent("ls:updateServerVehiclePlate")
+AddEventHandler("ls:updateServerVehiclePlate", function(oldPlate, newPlate)
+    if(owners[oldPlate] and not owners[newPlate])then 
+        owners[newPlate] = owners[oldPlate]
+        owners[oldPlate] = nil
+    end
+    if(secondOwners[oldPlate] and not secondOwners[newPlate])then
+        secondOwners[newPlate] = secondOwners[oldPlate]
+        secondOwners[oldPlate] = nil
+    end
+end)
+
 RegisterServerEvent("ls:retrieveVehiclesOnconnect")
 AddEventHandler("ls:retrieveVehiclesOnconnect", function()
     local src = source
@@ -8,24 +20,22 @@ AddEventHandler("ls:retrieveVehiclesOnconnect", function()
 
     for plate, plyIdentifier in pairs(owners) do
         if(plyIdentifier == srcIdentifier)then 
-            TriggerClientEvent("ls:newVehicle", src, plate)
+            TriggerClientEvent("ls:newVehicle", src, nil, plate, nil)
         end
     end
 
     for plate, identifiers in pairs(secondOwners) do 
         for _, plyIdentifier in ipairs(identifiers) do 
             if(plyIdentifier == srcIdentifier)then
-                TriggerClientEvent("ls:newVehicle", src, plate)
+                TriggerClientEvent("ls:newVehicle", src, nil, plate, nil)
             end
         end
     end
 end)
 
 RegisterServerEvent("ls:addSecondOwner")
-AddEventHandler("ls:addSecondOwner", function(targetId, plate)
-    table.insert(secondOwners[plate], targetId)
-
-    
+AddEventHandler("ls:addSecondOwner", function(targetIdentifier, plate)
+    table.insert(secondOwners[plate], targetIdentifier)
 end)
 
 RegisterServerEvent("ls:addOwner")
@@ -69,8 +79,8 @@ RegisterCommand('givekey', function(source, args, rawCommand)
                 if(plate)then
                     if(owners[plate])then
                         if(owners[plate] == identifier)then
-                            TriggerClientEvent("ls:giveKeys", targetId, plate)
-                            TriggerEvent("ls:addSecondOwner", targetId, plate)
+                            TriggerClientEvent("ls:giveKeys", targetIdentifier, plate)
+                            TriggerEvent("ls:addSecondOwner", targetIdentifier, plate)
 
                             TriggerClientEvent('chatMessage', targetId, '', {255, 255, 255}, "You have received the keys to car " .. plate .. " by " .. GetPlayerName(src))
                             TriggerClientEvent('chatMessage', src, '', {255, 255, 255}, "You gave the keys to car " .. plate .. " to " .. GetPlayerName(targetId))

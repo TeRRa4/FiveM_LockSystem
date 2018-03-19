@@ -52,16 +52,14 @@ AddEventHandler("ls:checkOwner", function(plate)
     local src = source
     local hasOwner = false
 
-    for k, v in pairs(owners) do 
-        if(k == plate)then
-            hasOwner = true
-        end
-    end
-
-    if(hasOwner)then
-        TriggerClientEvent("ls:getHasOwner", src, true)
+    if(not owners[plate])then
+        TriggerClientEvent("ls:getHasOwner", src, nil)
+        print("LOCKSYSTEM: RETURN NIL LINE 57")
     else 
-        TriggerClientEvent("ls:getHasOwner", src, false)
+        TriggerClientEvent("ls:getHasOwner", src, true)
+        print("LOCKSYSTEM: RETURN TRUE LINE 60")
+        print(owners[plate])
+        print("END-------------------")
     end
 end)
 

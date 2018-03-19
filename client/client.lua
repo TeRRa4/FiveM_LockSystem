@@ -140,11 +140,12 @@ end)
 
 -- @ Returns hasOwner : Boolean
 RegisterNetEvent("ls:getHasOwner")
-AddEventHandler("ls:getHasOwner", function(value)
-    if(value)then
-        hasOwner = value
-    else 
-        hasOwner = false
+AddEventHandler("ls:getHasOwner", function(hasOwner)
+    print("RECEIVED HASOWNER :")
+    print(hasOwner)
+    print("END")
+    if(hasOwner)then
+        hasOwner = true
     end
 end)
 

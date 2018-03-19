@@ -4,7 +4,7 @@
 
 This is the latest version of LockSystem. This is probably my last public project on FiveM due to time constraints.
 
-I'll keep reading your posts and try to update the script from time to time. You will be notified directly in your console when a new version is released! So feel free to give your feedback and recommendations on the forum.
+I'll keep reading your posts and try to update the script when i can. You will be notified directly in your console when a new version is released! So feel free to give your feedback and recommendations on the forum.
 
 ## Many thanks
 
@@ -16,12 +16,8 @@ The first version was my first Lua test and I won't lie to you, the code is real
 
 ## Contribution guide
 
-- Fork the project.
-
-- Clone the repo you just fork.
-
-- Create a new branch named like feature/my-new-feature.
-
-- Create a pull request of your feature/my-new-feature to the testing branch.
-
-- [You also can take a look here - Step by step guide](Create a pull request of your feature/my-new-feature to the testing branch)
+1. Fork the project.
+2. Clone the repo you just fork.
+3. Create a new branch named like feature/my-new-feature.
+4. Create a pull request of your feature/my-new-feature to the testing branch.
+5. [You also can take a look here - Step by step guide](https://codeburst.io/a-step-by-step-guide-to-making-your-first-github-contribution-5302260a2940)

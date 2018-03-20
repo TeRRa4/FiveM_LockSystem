@@ -15,7 +15,12 @@ local Keys = {
 globalConf = {
 	["SERVER"] = {
 		--percentage = 100,					-- This is the percentage of chance to find the keys. (50% by default). Coming soon
-		versionChecker = false				-- Set to false for disable the version checker.
+		versionChecker = false,				-- Set to false for disable the version checker.
+
+		["GIVEKEY"] = {
+			enable = true,					-- Enable the /givekey <id> <plate> command.
+			basic_chat = true				-- /!\ : SET TO FALSE IF YOU HAVE DISABLED THE BASIC CHAT !
+		}
 	},
 
 	["CLIENT"] = {

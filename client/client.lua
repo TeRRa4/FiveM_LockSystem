@@ -99,7 +99,6 @@ end
 ------------------------    EVENTS      ------------------------ 
 ------------------------     :)         ------------------------ 
 
--- @ Returns hasOwner : Boolean
 RegisterNetEvent("ls:getHasOwner")
 AddEventHandler("ls:getHasOwner", function(hasOwner, localVehId, localVehPlate, localVehLockStatus)
     if(not hasOwner)then
@@ -125,8 +124,6 @@ AddEventHandler("ls:updateVehiclePlate", function(oldPlate, newPlate)
     end
 end)
 
--- @ Create client instance of a vehicle
--- @ Get params : [id], plate, [lockStatus]
 RegisterNetEvent("ls:newVehicle")
 AddEventHandler("ls:newVehicle", function(id, plate, lockStatus)
     if(plate)then
@@ -140,8 +137,6 @@ AddEventHandler("ls:newVehicle", function(id, plate, lockStatus)
     end
 end)
 
--- @ Create client instance of a vehicle
--- @ Returns void
 RegisterNetEvent("ls:giveKeys")
 AddEventHandler("ls:giveKeys", function(plate)
     local plate = string.lower(plate)
@@ -164,7 +159,6 @@ AddEventHandler('InteractSound_CL:PlayWithinDistance', function(playerNetId, max
     end
 end)
 
--- @ Send a notification
 RegisterNetEvent('ls:notify')
 AddEventHandler('ls:notify', function(text, duration)
 	Notify(text, duration)
@@ -173,14 +167,12 @@ end)
 ------------------------    FUNCTIONS      ------------------------ 
 ------------------------        :O         ------------------------ 
 
--- @ Returns the direction from coordA to coordB
 function GetVehicleInDirection(coordFrom, coordTo)
 	local rayHandle = CastRayPointToPoint(coordFrom.x, coordFrom.y, coordFrom.z, coordTo.x, coordTo.y, coordTo.z, 10, GetPlayerPed(-1), 0)
 	local a, b, c, d, vehicle = GetRaycastResult(rayHandle)
 	return vehicle
 end
 
--- @ Returns the targeted vehicle id in direction
 function GetTargetedVehicle(pCoords, ply)
     for i = 1, 200 do
         coordB = GetOffsetFromEntityInWorldCoords(ply, 0.0, (6.281)/i, 0.0)
@@ -192,8 +184,6 @@ function GetTargetedVehicle(pCoords, ply)
     return
 end
 
--- @ Send a notification (chatMessage, LockSystem notification or nothing | Configuration inside Config/shared.lua)
--- @ Returns void
 function Notify(text, duration)
 	if(globalConf['CLIENT'].notification)then
 		if(globalConf['CLIENT'].notification == 1)then

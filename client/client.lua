@@ -19,10 +19,12 @@ Citizen.CreateThread(function()
 
             -- Retrieve the local ID of the targeted vehicle
             if(IsPedInAnyVehicle(ply, true))then
-                localVehId = GetVehiclePedIsIn(GetPlayerPed(-1), false) -- by sitting inside him
+                -- by sitting inside him
+                localVehId = GetVehiclePedIsIn(GetPlayerPed(-1), false) 
                 isInside = true
             else
-                localVehId = GetTargetedVehicle(pCoords, ply) -- by targeting the vehicle
+                -- by targeting the vehicle
+                localVehId = GetTargetedVehicle(pCoords, ply) 
             end
 
             -- Get targeted vehicle infos
@@ -35,17 +37,20 @@ Citizen.CreateThread(function()
                 for plate, vehicle in pairs(vehicles) do
                     if(string.lower(plate) == localVehPlate)then
                         hasKey = true
-                        vehicle.update(localVehId, localVehLockStatus) -- update the vehicle infos (Useful for hydrating instances created by the /givekey command)
-                        vehicle.lock() -- Lock or unlock the vehicle
+                        -- update the vehicle infos (Useful for hydrating instances created by the /givekey command)
+                        vehicle.update(localVehId, localVehLockStatus)
+                        -- Lock or unlock the vehicle
+                        vehicle.lock()
                     end
                 end
 
-                -- Else if the player doesn't have the keys
+                -- If the player doesn't have the keys
                 if(not hasKey)then
                     
                     -- If the player is inside the vehicle
                     if(isInside)then
                         -- Check if the vehicle is already owned.
+                        -- And send the parameters to create the vehicle object if this is not the case.
                         TriggerServerEvent('ls:checkOwner', localVehId, localVehPlate, localVehLockStatus)
                     end
                 end
@@ -56,19 +61,19 @@ end)
 
 -- Prevents the player from breaking the window if the vehicle is locked 
 -- (fixing a bug in the previous version)
--- Citizen.CreateThread(function()
--- 	while true do
--- 		Wait(0)
--- 		local ped = GetPlayerPed(-1)
---         if DoesEntityExist(GetVehiclePedIsTryingToEnter(PlayerPedId(ped))) then
---         	local veh = GetVehiclePedIsTryingToEnter(PlayerPedId(ped))
--- 	        local lock = GetVehicleDoorLockStatus(veh)
--- 	        if lock == 4 then
--- 	        	ClearPedTasks(ped)
--- 	        end
---         end
--- 	end
--- end)
+Citizen.CreateThread(function()
+	while true do
+		Wait(0)
+		local ped = GetPlayerPed(-1)
+        if DoesEntityExist(GetVehiclePedIsTryingToEnter(PlayerPedId(ped))) then
+        	local veh = GetVehiclePedIsTryingToEnter(PlayerPedId(ped))
+	        local lock = GetVehicleDoorLockStatus(veh)
+	        if lock == 4 then
+	        	ClearPedTasks(ped)
+	        end
+        end
+	end
+end)
 
 -- Locks a car if a nonplayer character is in it
 if(globalConf['CLIENT'].disableCar_NPC)then

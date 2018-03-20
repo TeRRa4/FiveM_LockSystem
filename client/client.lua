@@ -5,7 +5,7 @@ AddEventHandler("playerSpawned", function()
 end)
 
 Citizen.CreateThread(function()
-    while true do 
+    while true do
         Wait(0)
 
         -- If the defined key is pressed
@@ -45,7 +45,7 @@ Citizen.CreateThread(function()
                     
                     -- If the player is inside the vehicle
                     if(isInside)then
-                        -- Verify if the vehicle is already owned and send all params
+                        -- Check if the vehicle is already owned.
                         TriggerServerEvent('ls:checkOwner', localVehId, localVehPlate, localVehLockStatus)
                     end
                 end
@@ -56,19 +56,19 @@ end)
 
 -- Prevents the player from breaking the window if the vehicle is locked 
 -- (fixing a bug in the previous version)
-Citizen.CreateThread(function()
-	while true do
-		Wait(0)
-		local ped = GetPlayerPed(-1)
-        if DoesEntityExist(GetVehiclePedIsTryingToEnter(PlayerPedId(ped))) then
-        	local veh = GetVehiclePedIsTryingToEnter(PlayerPedId(ped))
-	        local lock = GetVehicleDoorLockStatus(veh)
-	        if lock == 4 then
-	        	ClearPedTasks(ped)
-	        end
-        end
-	end
-end)
+-- Citizen.CreateThread(function()
+-- 	while true do
+-- 		Wait(0)
+-- 		local ped = GetPlayerPed(-1)
+--         if DoesEntityExist(GetVehiclePedIsTryingToEnter(PlayerPedId(ped))) then
+--         	local veh = GetVehiclePedIsTryingToEnter(PlayerPedId(ped))
+-- 	        local lock = GetVehicleDoorLockStatus(veh)
+-- 	        if lock == 4 then
+-- 	        	ClearPedTasks(ped)
+-- 	        end
+--         end
+-- 	end
+-- end)
 
 -- Locks a car if a nonplayer character is in it
 if(globalConf['CLIENT'].disableCar_NPC)then

@@ -1,6 +1,6 @@
 # LockSystem - Version 2.0
 
-[FiveM LockSystem direct official link](https://forum.fivem.net/t/release-locksystem-v2-0-3-updated-the-07-03-at-11pm/17750)
+[Official FiveM link](https://forum.fivem.net/t/release-locksystem-v2-0-3-updated-the-07-03-at-11pm/17750)
 
 This is the **latest version** of LockSystem. I apologize for the low frequency of updates.
 This is probably my last public project on FiveM due to time constraints, for the moment.
@@ -17,11 +17,9 @@ The first version was my first Lua test and I won't lie to you, the code is real
 
 **Great people !**
 
-| Name   | Server       |   |   |   |
-|--------|--------------|---|---|---|
-| ⓚⓐⓢⓨ③ⓡ | AmericanLife |   |   |   |
-|        |              |   |   |   |
-|        |              |   |   |   |
+| Name   | Server       |
+|--------|--------------|
+| ⓚⓐⓢⓨ③ⓡ | AmericanLife |
 
 ## Contribution guide
 

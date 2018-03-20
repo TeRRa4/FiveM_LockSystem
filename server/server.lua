@@ -69,13 +69,13 @@ RegisterCommand('givekey', function(source, args, rawCommand)
     local identifier = GetPlayerIdentifiers(src)[1]
 
     local targetId = args[1]
-    local plate = string.lower(args[2])
 
     if(targetId)then
         local targetIdentifier = GetPlayerIdentifiers(targetId)[1]
         if(targetIdentifier)then 
             if(targetIdentifier ~= identifier)then
-                if(plate)then
+                if(args[2])then
+                    local plate = string.lower(args[2])
                     if(owners[plate])then
                         if(owners[plate] == identifier)then
                             TriggerClientEvent("ls:giveKeys", targetIdentifier, plate)

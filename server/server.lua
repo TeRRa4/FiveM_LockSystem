@@ -75,6 +75,10 @@ RegisterCommand('givekey', function(source, args, rawCommand)
         if(targetIdentifier)then 
             if(targetIdentifier ~= identifier)then
                 if(args[2])then
+                    print("PLAQUE ARGS 2")
+                    print(string.lower(args[2]))
+                    print("PLAQUE OWNERS[plate]")
+                    print(owners[plate])
                     local plate = string.lower(args[2])
                     if(owners[plate])then
                         if(owners[plate] == identifier)then

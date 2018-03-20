@@ -1,9 +1,24 @@
-local vehicles = {} -- vehicles[plate] = Object vehicle
+----------------------
+-- Author : Deediezi
+-- Version 2.0
+-- 
+-- Github link : https://github.com/Deediezi/FiveM_LockSystem
+-- You can contribute to the project. All the information is on Github.
 
+-- client: main algorithm with all functions and events.
+
+----
+-- @var vehicles[plate_number] = newVehicle Object
+local vehicles = {}
+
+---- Retrieve the keys of a player when he reconnects.
+-- The keys are synchronized with the server. If you restart the server, all keys disappear.
 AddEventHandler("playerSpawned", function()
     TriggerServerEvent("ls:retrieveVehiclesOnconnect")
 end)
 
+---- Main thread
+-- The logic of the script is here
 Citizen.CreateThread(function()
     while true do
         Wait(0)
@@ -59,7 +74,7 @@ Citizen.CreateThread(function()
     end
 end)
 
--- Prevents the player from breaking the window if the vehicle is locked 
+---- Prevents the player from breaking the window if the vehicle is locked 
 -- (fixing a bug in the previous version)
 Citizen.CreateThread(function()
 	while true do
@@ -75,7 +90,8 @@ Citizen.CreateThread(function()
 	end
 end)
 
--- Locks a car if a nonplayer character is in it
+---- Locks vehicles if non-playable characters are in them
+-- Can be disabled in "config/shared.lua"
 if(globalConf['CLIENT'].disableCar_NPC)then
     Citizen.CreateThread(function()
         while true do 
@@ -99,6 +115,12 @@ end
 ------------------------    EVENTS      ------------------------ 
 ------------------------     :)         ------------------------ 
 
+---- Event called from the server
+-- Get the keys if the vehicle has no owner
+-- @param boolean hasOwner
+-- @param int localVehId
+-- @param string localVehPlate
+-- @param int localVehLockStatus
 RegisterNetEvent("ls:getHasOwner")
 AddEventHandler("ls:getHasOwner", function(hasOwner, localVehId, localVehPlate, localVehLockStatus)
     if(not hasOwner)then
@@ -111,6 +133,10 @@ AddEventHandler("ls:getHasOwner", function(hasOwner, localVehId, localVehPlate, 
     end
 end)
 
+---- API for developers
+-- You can call this event when changing a number plate in another script to update the data
+-- @param string oldPlate
+-- @param string newPlate
 RegisterNetEvent("ls:updateVehiclePlate")
 AddEventHandler("ls:updateVehiclePlate", function(oldPlate, newPlate)
     local oldPlate = string.lower(oldPlate)
@@ -124,6 +150,10 @@ AddEventHandler("ls:updateVehiclePlate", function(oldPlate, newPlate)
     end
 end)
 
+---- Create a new vehicle object
+-- @param int id [opt]
+-- @param string plate
+-- @param string lockStatus [opt]
 RegisterNetEvent("ls:newVehicle")
 AddEventHandler("ls:newVehicle", function(id, plate, lockStatus)
     if(plate)then
@@ -137,13 +167,16 @@ AddEventHandler("ls:newVehicle", function(id, plate, lockStatus)
     end
 end)
 
+---- Event called from server when a player execute the /givekey command
+-- Create a new vehicle object with its plate
+-- @param string plate
 RegisterNetEvent("ls:giveKeys")
 AddEventHandler("ls:giveKeys", function(plate)
     local plate = string.lower(plate)
     TriggerEvent("ls:newVehicle", nil, plate, nil)
 end)
 
--- Piece of code from Scott's InteractSound script : https://forum.fivem.net/t/release-play-custom-sounds-for-interactions/8282
+---- Piece of code from Scott's InteractSound script : https://forum.fivem.net/t/release-play-custom-sounds-for-interactions/8282
 -- I've decided to use only one part of its script so that administrators don't have to download more scripts. I hope you won't forget to thank him!
 RegisterNetEvent('InteractSound_CL:PlayWithinDistance')
 AddEventHandler('InteractSound_CL:PlayWithinDistance', function(playerNetId, maxDistance, soundFile, soundVolume)
@@ -167,12 +200,20 @@ end)
 ------------------------    FUNCTIONS      ------------------------ 
 ------------------------        :O         ------------------------ 
 
+---- Get a vehicle in direction
+-- @param array coordFrom
+-- @param array coordTo
+-- @return int
 function GetVehicleInDirection(coordFrom, coordTo)
 	local rayHandle = CastRayPointToPoint(coordFrom.x, coordFrom.y, coordFrom.z, coordTo.x, coordTo.y, coordTo.z, 10, GetPlayerPed(-1), 0)
 	local a, b, c, d, vehicle = GetRaycastResult(rayHandle)
 	return vehicle
 end
 
+---- Get the vehicle in front of the player
+-- @param array pCoords
+-- @param int ply
+-- @return int
 function GetTargetedVehicle(pCoords, ply)
     for i = 1, 200 do
         coordB = GetOffsetFromEntityInWorldCoords(ply, 0.0, (6.281)/i, 0.0)
@@ -184,6 +225,10 @@ function GetTargetedVehicle(pCoords, ply)
     return
 end
 
+---- Notify the player
+-- Can be configured in "config/shared.lua"
+-- @param string text
+-- @param float duration [opt] 
 function Notify(text, duration)
 	if(globalConf['CLIENT'].notification)then
 		if(globalConf['CLIENT'].notification == 1)then

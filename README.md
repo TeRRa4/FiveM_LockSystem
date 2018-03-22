@@ -17,9 +17,9 @@ The first version was my first Lua test and I won't lie to you, the code is real
 
 **Great people !**
 
-| Name   | Server       |
-|--------|--------------|
-| ⓚⓐⓢⓨ③ⓡ | AmericanLife |
+| Name   | Server       | Why              |
+|--------|--------------|------------------|
+| ⓚⓐⓢⓨ③ⓡ | AmericanLife | Help for testing |
 
 ## Contribution guide
 

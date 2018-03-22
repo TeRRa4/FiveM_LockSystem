@@ -1,4 +1,13 @@
-_VERSION = 2.0
+----------------------
+-- Author : Deediezi
+-- Version 3.0
+--
+-- Contributors : No contributors at the moment.
+--
+-- Github link : https://github.com/Deediezi/FiveM_LockSystem
+-- You can contribute to the project. All the information is on Github.
+
+-- Global configuration file
 
 local Keys = {
 	["ESC"] = 322, ["F1"] = 288, ["F2"] = 289, ["F3"] = 170, ["F5"] = 166, ["F6"] = 167, ["F7"] = 168, ["F8"] = 169, ["F9"] = 56, ["F10"] = 57,
@@ -12,21 +21,29 @@ local Keys = {
 	["NENTER"] = 201, ["N4"] = 108, ["N5"] = 60, ["N6"] = 107, ["N+"] = 96, ["N-"] = 97, ["N7"] = 117, ["N8"] = 61, ["N9"] = 118
 }
 
+_VERSION = 3.0
+
 globalConf = {
 	["SERVER"] = {
-		--percentage = 100,					-- This is the percentage of chance to find the keys. (50% by default). Coming soon
-		versionChecker = false,				-- Set to false for disable the version checker.
-
-		["GIVEKEY"] = {
-			enable = true,					-- Enable the /givekey <id> <plate> command.
-			basic_chat = true				-- /!\ : SET TO FALSE IF YOU HAVE DISABLED THE BASIC CHAT !
-		}
+		versionChecker = true,			-- Set to false for disable the version checker
+		enableGiveKey = true			-- Enable or disable the /givekey chatCommand
 	},
 
 	["CLIENT"] = {
-		notification 		= 1, 		 	-- 0 = Disable | 1 = LockSystem notification | 2 = chatMessage notification.         
-		key 				= Keys['U'], 	-- e.g : Keys["H"] will be change the U key to the H key for lock/unlock a vehicle.     
-		disableCar_NPC		= false, 	 	-- Set to true for disable NPC's car.                                                  
-		--lockTimer			= 1.5			-- Timer to open / close a vehicle (in seconds). Coming soon
+		percentage = 50,				-- Percentage chance of finding keys
+		notification = 1,				-- 0 = Disable | 1 = LockSystem notification | 2 = chatMessage notification
+		key = Keys['U'],				-- e.g : Keys["H"] will be change the U key to the H key for lock/unlock a vehicle
+		disableCar_NPC = false,			-- Set to true for disable NPC's car
+		lockTimer = 1.5,				-- Timer between two changes (open/close - in seconds)
 	}
+}
+
+---- Random messages generated during key recovery.
+-- You can add or remove some.
+-- Don't forget commas, otherwise you will get an error when running the script
+randomMsg =
+{
+	"You found the keys in the glove compartment",
+	"The keys were already there. You took them",
+	"You found the keys on the dashboard",
 }

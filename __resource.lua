@@ -8,7 +8,7 @@ client_scripts {
 
 server_scripts {
     "config/shared.lua",
-    "server/VehicleManager_SV.lua",
+    "server/chatCommand.lua",
     "server/server.lua"
 }
 

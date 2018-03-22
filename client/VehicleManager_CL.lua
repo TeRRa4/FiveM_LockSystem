@@ -1,3 +1,14 @@
+----------------------
+-- Author : Deediezi
+-- Version 3.0
+--
+-- Contributors : No contributors at the moment.
+--
+-- Github link : https://github.com/Deediezi/FiveM_LockSystem
+-- You can contribute to the project. All the information is on Github.
+
+--  Vehicle object manager - Client side
+
 function newVehicle()
     local self = {}
 
@@ -12,7 +23,7 @@ function newVehicle()
             self.id = id
         end
         if(plate and type(plate) == "string")then
-            self.plate = plate 
+            self.plate = plate
         end
         if(lockStatus and type(lockStatus) == "number")then
             self.lockStatus = lockStatus
@@ -31,11 +42,13 @@ function newVehicle()
         if(lockStatus == 0 or lockStatus == 1)then
             self.lockStatus = 4
             SetVehicleDoorsLocked(self.id, self.lockStatus)
+            SetVehicleDoorsLockedForAllPlayers(self.id, 1)
             TriggerEvent("ls:notify", "Vehicle locked")
             TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 10, "lock", 1.0)
         elseif(lockStatus == 2 or lockStatus == 4)then
             self.lockStatus = 0
             SetVehicleDoorsLocked(self.id, self.lockStatus)
+            SetVehicleDoorsLockedForAllPlayers(self.id, 0)
             TriggerEvent("ls:notify", "Vehicle unlocked")
             TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 10, "unlock", 1.0)
         end

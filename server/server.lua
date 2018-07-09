@@ -9,8 +9,8 @@
 
 --  Server side
 
-local owners = {} -- owners[plate] = identifier
-local secondOwners = {} -- secondOwners[plate] = {identifier, identifier, ...}
+owners = {} -- owners[plate] = identifier
+secondOwners = {} -- secondOwners[plate] = {identifier, identifier, ...}
 
 RegisterServerEvent("ls:retrieveVehiclesOnconnect")
 AddEventHandler("ls:retrieveVehiclesOnconnect", function()

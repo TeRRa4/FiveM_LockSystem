@@ -37,18 +37,21 @@ function newVehicle()
         self.lockStatus = lockStatus
     end
 
+    -- 0, 1 = unlocked
+    -- 2 = locked
+    -- 4 = locked and player can't get out
     rTable.lock = function()
         lockStatus = self.lockStatus
-        if(lockStatus == 0 or lockStatus == 1)then
+        if(lockStatus <= 2)then
             self.lockStatus = 4
             SetVehicleDoorsLocked(self.id, self.lockStatus)
             SetVehicleDoorsLockedForAllPlayers(self.id, 1)
             TriggerEvent("ls:notify", "Vehicle locked")
             TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 10, "lock", 1.0)
-        elseif(lockStatus == 2 or lockStatus == 4)then
-            self.lockStatus = 0
+        elseif(lockStatus > 2)then
+            self.lockStatus = 1
             SetVehicleDoorsLocked(self.id, self.lockStatus)
-            SetVehicleDoorsLockedForAllPlayers(self.id, 0)
+            SetVehicleDoorsLockedForAllPlayers(self.id, false)
             TriggerEvent("ls:notify", "Vehicle unlocked")
             TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 10, "unlock", 1.0)
         end
